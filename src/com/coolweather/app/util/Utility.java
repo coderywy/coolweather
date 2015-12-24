@@ -8,6 +8,7 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import com.coolweather.app.db.CoolWeatherDB;
+import com.coolweather.app.model.City;
 import com.coolweather.app.model.Province;
 
 import android.text.TextUtils;
@@ -59,8 +60,36 @@ public class Utility {
 		return false;
 	}
 	
-	public synchronized static boolean handleCitiesResponse(CoolWeatherDB coolWeatherDB,String response,int provincedId){
-		
+	public synchronized static boolean handleCitiesResponse(CoolWeatherDB coolWeatherDB,String response,String provinceId){
+		if (!TextUtils.isEmpty(response)){
+			/*
+			 * ½âÎöxml×Ö·û´®
+			 */
+			XmlPullParser parser = Xml.newPullParser();
+			InputStream in = new ByteArrayInputStream(response.getBytes());
+			try {
+				parser.setInput(in, "UTF-8");
+				int type = parser.getEventType();
+				while (type != XmlPullParser.END_DOCUMENT){
+					if (type == XmlPullParser.START_TAG){
+						String name = parser.getName();
+						String cityString = parser.getText();
+						if (PROVICE_XML.equals(name) && !"".equals(cityString)){
+							City city = new City();
+							city.setCityName(cityString.split(",")[0]);
+							city.setCityCode(cityString.split(",")[1]);
+							city.setProvinceId(provinceId);
+							coolWeatherDB.saveCity(city);
+						}
+					}
+					type = parser.next();
+				}
+				return true;
+			} catch (Exception e) {
+				e.printStackTrace();
+				return false;
+			} 
+		}
 		return false;
 	}
 }
