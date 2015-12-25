@@ -20,9 +20,9 @@ public class HttpUtil {
 				try {
 					URL url = new URL(address);
 					connection = (HttpURLConnection) url.openConnection();
-					connection.setRequestMethod("GET");
-					connection.setReadTimeout(8000);
-					connection.setConnectTimeout(8000);
+					//connection.setRequestMethod("GET");
+					//connection.setReadTimeout(80000);
+					//connection.setConnectTimeout(80000);
 					InputStream in = connection.getInputStream();
 					BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 					StringBuilder response = new StringBuilder();
@@ -34,6 +34,7 @@ public class HttpUtil {
 						listener.onFinish(response.toString());
 					}
 				} catch (IOException e) {
+					e.printStackTrace();
 					if (listener != null){
 						listener.onError(e);
 					}

@@ -120,8 +120,8 @@ public class ChooseAreaActivity extends Activity {
 
 	private void queryFromServer(final String code,final String type) {
 		String address;
-		if (!TextUtils.isEmpty(code)){
-			address = "http://webservice.webxml.com.cn/WebServices/WeatherWS.asmx/getRegionProvince";
+		if (TextUtils.isEmpty(code)){
+			address = "http://web.36wu.com/WeatherService.asmx/GetAreaList?authkey=a73aa63c0eae4a2c8a6f0de87a7fb6e4";
 		} else {
 			address = "http://webservice.webxml.com.cn/WebServices/WeatherWS.asmx/getSupportCityString?theRegionCode="+code;
 		}
