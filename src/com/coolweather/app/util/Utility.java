@@ -60,7 +60,7 @@ public class Utility {
 		return false;
 	}
 	
-	public synchronized static boolean handleCitiesResponse(CoolWeatherDB coolWeatherDB,String response,String provinceId){
+	public synchronized static boolean handleCitiesResponse(CoolWeatherDB coolWeatherDB,String response,String provinceCode){
 		if (!TextUtils.isEmpty(response)){
 			/*
 			 * ½âÎöxml×Ö·û´®
@@ -78,7 +78,7 @@ public class Utility {
 							City city = new City();
 							city.setCityName(cityString.split(",")[0]);
 							city.setCityCode(cityString.split(",")[1]);
-							city.setProvinceId(provinceId);
+							city.setProvinceCode(provinceCode);
 							coolWeatherDB.saveCity(city);
 						}
 					}
