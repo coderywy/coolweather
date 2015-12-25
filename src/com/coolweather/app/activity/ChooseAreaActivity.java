@@ -95,7 +95,7 @@ public class ChooseAreaActivity extends Activity {
 			titleText.setText(selectedProvince.getProvinceName());
 			currentLevel = LEVEL_CITY;
 		} else {
-			queryFromServer(selectedProvince.getProvinceCode(),"city");
+			queryFromXML(selectedProvince.getProvinceCode(),"city");
 		}
 	}
 
@@ -114,10 +114,15 @@ public class ChooseAreaActivity extends Activity {
 			titleText.setText("中国");
 			currentLevel = LEVEL_PROVINCE;
 		} else {
-			queryFromServer(null,"province");
+			queryFromXML(null,"province");
 		}
 	}
+	
+	private void queryFromXML(final String code,final String type){
+		
+	}
 
+	/**
 	private void queryFromServer(final String code,final String type) {
 		String address;
 		if (TextUtils.isEmpty(code)){
@@ -161,6 +166,7 @@ public class ChooseAreaActivity extends Activity {
 			}
 		});
 	}
+	*/
 
 	/**
 	 * 显示加载进度条
