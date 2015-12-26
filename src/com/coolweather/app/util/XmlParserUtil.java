@@ -1,6 +1,9 @@
 package com.coolweather.app.util;
 
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.xmlpull.v1.XmlPullParser;
 
 import com.coolweather.app.db.CoolWeatherDB;
@@ -12,29 +15,29 @@ import android.content.Context;
 import android.util.Xml;
 
 public class XmlParserUtil {
-	private Context context;
-	private CoolWeatherDB coolWeatherDB;
-
-	private XmlParserUtil(Context context) {
-		super();
-		this.context = context;
-		this.coolWeatherDB = CoolWeatherDB.getInstance(context);
+	
+	public static void getXMLResource(final Context context,final String filaName,final XmlCallBackListener listener){
+		new Thread(new Runnable() {
+			public void run() {
+				try {
+					InputStream in = context.getAssets().open(filaName);
+					if (listener != null){
+						listener.onFinish(in);
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+					if (listener != null){
+						listener.onError();
+					}
+				}
+			}
+		}).start();
 	}
 
-	/**
-	 * 得到xml解析对象
-	 * @param context
-	 * @return
-	 */
-	public static XmlParserUtil getInstance(Context context){
-		return new XmlParserUtil(context);
-	}
-
-
-	public static boolean parserXml(Context context,CoolWeatherDB coolWeatherDB,String path) {
+	public static boolean parserXml(CoolWeatherDB coolWeatherDB,InputStream in) {
 		XmlPullParser parser = Xml.newPullParser();
 		try {
-			parser.setInput(context.getAssets().open(path), "UTF-8");
+			parser.setInput(in, "UTF-8");
 			int eventCode = parser.getEventType();
 			Province province = null;
 			City city = null;
@@ -50,10 +53,10 @@ public class XmlParserUtil {
 					if ("areaid".equals(parser.getName())) {
 						String code = parser.nextText();
 						province.setProvinceCode(code.substring(0, 5));
-						city.setCityCode(code.substring(0,6));
+						city.setCityCode(code.substring(0,7));
 						city.setProvinceCode(code.substring(0, 5));
 						county.setCountyCode(code);
-						county.setCityCode(code.substring(0,6));
+						county.setCityCode(code.substring(0,7));
 					}
 					if ("prov".equals(parser.getName())) {
 						String name = parser.nextText();
@@ -63,7 +66,7 @@ public class XmlParserUtil {
 						String name = parser.nextText();
 						city.setCityName(name);
 					}
-					if ("county".equals(parser.getName())) {
+					if ("district".equals(parser.getName())) {
 						String name = parser.nextText();
 						county.setCountyName(name);
 					}
