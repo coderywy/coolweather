@@ -13,7 +13,6 @@ import com.coolweather.app.util.DatabaseUtil;
 import com.coolweather.app.util.XmlCallBackListener;
 import com.coolweather.app.util.XmlParserUtil;
 import com.example.coolweather.R;
-import com.example.coolweather.WeatherActivity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;

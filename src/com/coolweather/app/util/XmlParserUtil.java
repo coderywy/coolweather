@@ -19,8 +19,9 @@ public class XmlParserUtil {
 	public static void getXMLResource(final Context context,final String filaName,final XmlCallBackListener listener){
 		new Thread(new Runnable() {
 			public void run() {
+				InputStream in = null;
 				try {
-					InputStream in = context.getAssets().open(filaName);
+					in = context.getAssets().open(filaName);
 					if (listener != null){
 						listener.onFinish(in);
 					}
@@ -28,6 +29,13 @@ public class XmlParserUtil {
 					e.printStackTrace();
 					if (listener != null){
 						listener.onError();
+					}
+					if (in != null){
+						try {
+							in.close();
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
 					}
 				}
 			}
