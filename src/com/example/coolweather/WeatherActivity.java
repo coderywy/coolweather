@@ -3,6 +3,7 @@ package com.example.coolweather;
 import java.io.IOException;
 
 import com.coolweather.app.activity.ChooseAreaActivity;
+import com.coolweather.app.service.AutoUpdateService;
 import com.coolweather.app.util.HttpCallbackListener;
 import com.coolweather.app.util.HttpUtil;
 import com.coolweather.app.util.JsonUtil;
@@ -92,6 +93,8 @@ public class WeatherActivity extends Activity implements OnClickListener{
 		dampness.setText("Êª¶È£º"+prefs.getString("dampness", ""));
 		pressure.setText("ÆøÑ¹£º"+prefs.getString("pressure", "")+"hpa");
 		weatherInfoLayout.setVisibility(View.VISIBLE);
+		Intent intent = new Intent(this,AutoUpdateService.class);
+		startService(intent);
 	}
 
 	@Override
