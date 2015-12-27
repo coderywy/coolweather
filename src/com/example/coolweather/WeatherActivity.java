@@ -53,6 +53,8 @@ public class WeatherActivity extends Activity implements OnClickListener{
 		if (!TextUtils.isEmpty(countyCode)){
 			weatherInfoLayout.setVisibility(View.INVISIBLE);
 			queryWeatherByCode(countyCode);
+		}else {
+			showWeather();
 		}
 		
 	}
