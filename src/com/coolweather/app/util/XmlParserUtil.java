@@ -94,6 +94,7 @@ public class XmlParserUtil {
 				}
 				eventCode = parser.next();
 			}
+			in.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

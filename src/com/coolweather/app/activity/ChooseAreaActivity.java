@@ -141,7 +141,7 @@ public class ChooseAreaActivity extends Activity {
 				runOnUiThread(new Runnable() {
 					public void run() {
 						ChooseAreaActivity.this.cityList = cityList;
-						if (cityList.size() >0){
+						if (cityList.size() > 1){
 							dataList.clear();
 							for (City city : cityList){
 								dataList.add(city.getCityName());
@@ -150,6 +150,9 @@ public class ChooseAreaActivity extends Activity {
 							listView.setSelection(0);
 							titleText.setText(selectedProvince.getProvinceName());
 							currentLevel = LEVEL_CITY;
+						} else if (cityList.size() == 1){
+							selectedCity = cityList.get(0);
+							queryCounties();
 						}
 					}
 				});
