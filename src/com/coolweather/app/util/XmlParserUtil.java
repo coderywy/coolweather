@@ -74,6 +74,11 @@ public class XmlParserUtil {
 				case XmlPullParser.END_TAG:
 					if ("Area".equals(parser.getName())){
 						coolWeatherDB.saveProvince(province);
+						if (province.getProvinceName() == city.getCityName()){
+							String code = city.getCityCode().substring(0, 5);
+							city.setCityCode(code);
+							county.setCityCode(code);
+						}
 						coolWeatherDB.saveCity(city);
 						coolWeatherDB.saveCounty(county);
 					}
